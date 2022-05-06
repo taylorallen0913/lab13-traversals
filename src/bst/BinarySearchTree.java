@@ -3,7 +3,6 @@ package bst;
 import java.util.Stack;
 
 public class BinarySearchTree<T extends Comparable<T>> {
-
 	private static class BSTNode<T extends Comparable<T>> {
 		private T data;
 		private BSTNode<T> leftChild;
@@ -12,6 +11,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		public BSTNode(T data) {
 			this.data = data;
 		}
+
 
 		@Override
 		public String toString() {
@@ -101,7 +101,6 @@ public class BinarySearchTree<T extends Comparable<T>> {
 			return this.recursiveFind(node.leftChild, key);
 		}
 		return this.recursiveFind(node.rightChild, key);
-
 	}
 
 	// Traverse the tree in an preorder fashion
@@ -140,7 +139,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 				pre.add(node.leftChild);
 			}
 		}
-	}	
+	}
 
 	// Traverse the tree in an inorder fashion
 	// Recursively print the left side of the current node, then the current node,
@@ -151,17 +150,36 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	}
 
 	public void inOrderRecurse(BSTNode<T> node) {
+		if(node == null) {
+			return;
+		}
 
+		inOrderRecurse(node.leftChild);
+		System.out.println(node.data);
+		inOrderRecurse(node.rightChild);
+		
 	}
 
-	// Traverse the tree in an inorder fashion but using a stack
+	//Traverse the tree in an inorder fashion but using a stack
 	public void inOrderStack() {
 		Stack<BSTNode<T>> in = new Stack<BSTNode<T>>();
 
-	}
+		if(root == null) {
+			return;
+		}
 
-	// Traverse the tree in an postorder fashion
-	// Recurse on the children and then print the value in the current node
+		BSTNode<T> node = root;
+
+		while(node != null || in.size() > 0) {
+			while(node != null) {
+				in.push(node);
+				node = node.leftChild;
+			}
+			node = in.pop();
+			System.out.println(node.data);	
+			node = node.rightChild;
+		}
+	}
 	public void postOrder() {
 		this.postOrderRecurse(this.root);
 		System.out.println("PostOrder test commit");
@@ -195,7 +213,6 @@ public class BinarySearchTree<T extends Comparable<T>> {
 					postHelper.push(post.peek().rightChild); // Put it into the helper stack
 				}
 			}
-
 			while (!post.isEmpty()) { // Run until the stack empties out
 				BSTNode<T> node = post.pop(); // Pop the uppermost node (the first few values should the last nodes on
 												// the left side)
@@ -204,14 +221,12 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 
 	}
-
 	@Override
 	public String toString() {
 		return this.recursiveToString(this.root, "");
 	}
 
 	private String recursiveToString(BSTNode<T> node, String indent) {
-
 		if (node == null) {
 			return "";
 		}
@@ -249,5 +264,4 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		System.out.println("Post Order Stack Traversals");
 		bst.postOrderStack();
 	}
-
 }
