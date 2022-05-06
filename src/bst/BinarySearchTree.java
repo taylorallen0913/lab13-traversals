@@ -52,17 +52,18 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		} else {// we found the node to delete
 			if (node.leftChild == null && node.rightChild == null) {
 				return null;
-			} else if (node.leftChild == null) {
-				return node.rightChild;
-			} else if (node.rightChild == null) {
-				return node.leftChild;
-			} else {// Still need to handle the case with two children
-				BSTNode<T> predecessor = this.getMax(node.leftChild);
-				T d = predecessor.data;
-				node.data = d;// update data at node
-				// remove predecessor node
-				node.leftChild = this.recursiveDelete(node.leftChild, d);
 			}
+			if (node.leftChild == null) {
+				return node.rightChild;
+			}
+			if (node.rightChild == null) {
+				return node.leftChild;
+			}
+			BSTNode<T> predecessor = this.getMax(node.leftChild);
+			T d = predecessor.data;
+			node.data = d;// update data at node
+			// remove predecessor node
+			node.leftChild = this.recursiveDelete(node.leftChild, d);
 		}
 		return node;
 	}
@@ -106,23 +107,19 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	// Traverse the tree in an preorder fashion
 	// Print the current node first and then recurse on the children
 	public void preOrder() {
-<<<<<<< HEAD
 		System.out.println("PreOrder test commit");
-		preOrderRecurse(root); 
-=======
 		this.preOrderRecurse(this.root);
->>>>>>> 5cdaac2 (updated traversal code)
+		this.preOrderRecurse(this.root);
 	}
 
 	private void preOrderRecurse(BSTNode<T> node) {
-<<<<<<< HEAD
-		if(node == null) return;
-		System.out.println(node.data);
-		preOrderRecurse(node.leftChild);
-		preOrderRecurse(node.rightChild);
-=======
 
->>>>>>> 5cdaac2 (updated traversal code)
+		if (node == null) {
+			return;
+		}
+		System.out.println(node.data);
+		this.preOrderRecurse(node.leftChild);
+		this.preOrderRecurse(node.rightChild);
 	}
 
 	// Traverse the tree in an preorder fashion but using a stack
@@ -158,7 +155,12 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	}
 
 	public void postOrderRecurse(BSTNode<T> node) {
-
+		if (node == null) {
+			return;
+		}
+		this.postOrderRecurse(node.leftChild);
+		this.postOrderRecurse(node.rightChild);
+		System.out.println(node.data);
 	}
 
 	// Traverse the tree in an postorder fashion uses Stacks.
@@ -219,6 +221,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		System.out.println();
 		bst.preOrderStack();
 		System.out.println();
+
 		System.out.println("Post Order Traversals");
 		bst.postOrder();
 		System.out.println();
